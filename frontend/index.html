@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Network Test MVP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            color: #333;
+            background-color: #f9f9f9;
+            min-height: 100vh;
+        }
+        .top-banner {
+            background: linear-gradient(90deg, #004466 0%, #1e82a3 100%);
+            color: white;
+            padding: 30px 0 20px 0;
+            text-align: center;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .top-banner h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .top-banner .icon {
+            font-size: 1.4em;
+        }
+        .container {
+            margin: 36px auto 0 auto;
+            max-width: 700px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            padding: 32px 24px 20px 24px;
+        }
+        button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #devices {
+            margin-top: 16px;
+        }
+        ul.device-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul.device-list li {
+            background-color: #f3fafe;
+            margin-bottom: 13px;
+            padding: 15px 16px;
+            border-radius: 7px;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.09);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        ul.device-list li span.device-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-left: 5px solid #28a745;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            display: none;
+        }
+        .error {
+            background-color: #f9d6d5;
+            border-left: 5px solid #dc3545;
+        }
+        /* Documentation styles */
+        #documentation {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            padding: 30px;
+            margin: 40px auto 22px auto;
+            font-size: 15px;
+            color: #333;
+            line-height: 1.62;
+            max-width: 760px;
+        }
+        #documentation h2 {
+            color: #056c99;
+            margin-top: 0;
+        }
+        #documentation ul { padding-left: 20px; }
+        /* Footer / personal details */
+        .footer {
+            background: #01445e;
+            color: #f6fafc;
+            padding: 18px 0 15px 0;
+            text-align: center;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            margin-top: 30px;
+            font-size: 15px;
+            letter-spacing: 0.03em;
+            width: 100%;
+        }
+        .footer strong { color: #ffea00; }
+        .footer a { color: #20f3ed; text-decoration: none; margin: 0 14px; }
+        .footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        <h1>Network Test Lab MVP</h1>
+        <div>Proof-of-Concept Automation · Final Year Major Project</div>
+    </div>
+    <div class="container">
+        <button onclick="discover()">Discover Devices</button>
+        <div id="devices"></div>
+        <div id="result"></div>
+    </div>
+    <div id="documentation">
+        <h2>Project Documentation</h2>
+        <p><strong>Project Overview:</strong> This project is a Minimum Viable Product (MVP) of a Network TestLab Automation tool designed to simplify and automate network device testing workflows. It simulates discovery of LANforge devices, allows running simple network tests, and presents results in an easy-to-understand format.</p>
+        <h3>Features</h3>
+        <ul>
+            <li><strong>Device Discovery:</strong> Simulated discovery of LANforge devices on the network.</li>
+            <li><strong>Test Execution:</strong> Simulated execution of a network throughput test returning dummy but realistic metrics.</li>
+            <li><strong>Result Visualization:</strong> Clear textual display of test results with throughput, latency, and packet loss.</li>
+            <li><strong>User Interface:</strong> Clean & responsive UI with interactive controls to trigger discovery and tests.</li>
+        </ul>
+        <h3>Tech Stack</h3>
+        <ul>
+            <li><strong>Backend:</strong> Python Flask API serving endpoints for discovery and test execution.</li>
+            <li><strong>Frontend:</strong> Plain HTML, CSS, and JavaScript providing user controls and result display.</li>
+            <li><strong>Data:</strong> Simulated data used for devices and test results. No database used in this MVP.</li>
+        </ul>
+        <h3>Architecture</h3>
+        <p>User triggers discovery → Frontend calls Flask backend <code>/discover</code> → Backend returns device list → Frontend displays devices → User clicks “Run Test” → Frontend POSTs to <code>/run_test</code> → Backend returns result → Frontend displays results.</p>
+        <h3>How to Run</h3>
+        <ol>
+            <li>Run the Flask backend server as instructed in the backend setup.</li>
+            <li>Open this HTML file (<code>index.html</code>) in a browser.</li>
+            <li>Click “Discover Devices” to list available devices.</li>
+            <li>Click “Run Test” next to a device to see simulated test results.</li>
+        </ol>
+        <h3>Future Improvements</h3>
+        <ul>
+            <li>Implement real LANforge device discovery using network protocols (mDNS, ping sweep).</li>
+            <li>Integrate actual LANforge API to run real network tests.</li>
+            <li>Store results persistently in a database (e.g., MongoDB).</li>
+            <li>Improve UI with charts, historical data, and advanced dashboards.</li>
+            <li>Add authentication and role-based access for secure lab usage.</li>
+        </ul>
+        <h3>Purpose & Value</h3>
+        <p>This MVP demonstrates a proof-of-concept for automating complex network testing workflows for companies like Candela Technologies. It shows the candidate’s ability to build modular, user-focused tools that enhance test efficiency and result interpretation.</p>
+    </div>
+    <div class="footer">
+        <strong>Avala Prabhash</strong> | Aspiring Software Engineering Intern<br>
+        Vizianagaram, Andhra Pradesh, India | <a href="mailto:prabhasavala7@gmail.com">prabhasavala7@gmail.com</a> | 📞 +91 9390330367
+        <br>
+        <a href="#" target="_blank">LinkedIn</a> | <a href="#" target="_blank">GitHub</a>
+        <br>
+        B.Tech (IT, Penultimate Year), ANITS | Cloud & AI Enthusiast | Full Stack Developer
+    </div>
+    <script>
+        async function discover() {
+            clearResult();
+            const devicesDiv = document.getElementById('devices');
+            devicesDiv.innerHTML = 'Discovering devices...';
+
+            try {
+                const res = await fetch('http://localhost:5000/discover');
+                if(!res.ok) throw new Error(`Server responded with status ${res.status}`);
+                const data = await res.json();
+
+                if(data.length === 0) {
+                    devicesDiv.innerHTML = '<p><em>No devices found.</em></p>';
+                    return;
+                }
+
+                let html = '<ul class="device-list">';
+                data.forEach(dev => {
+                    html += `
+                        <li>
+                            <span class="device-name">${dev.name}</span> 
+                            <small>(${dev.ip})</small> 
+                            <button onclick="runTest('${dev.ip}')">Run Test</button>
+                        </li>`;
+                });
+                html += '</ul>';
+                devicesDiv.innerHTML = html;
+            } catch (error) {
+                devicesDiv.innerHTML = `<p class="error">Error discovering devices: ${error.message}</p>`;
+            }
+        }
+
+        async function runTest(ip) {
+            clearResult();
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.classList.remove('error');
+            resultDiv.textContent = `Running throughput test on ${ip}...`;
+
+            try {
+                const res = await fetch('http://localhost:5000/run_test', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({device_ip: ip, test_type: 'throughput'})
+                });
+                if (!res.ok) {
+                    const errText = await res.text();
+                    throw new Error(`Server error: ${res.status} - ${errText}`);
+                }
+                const result = await res.json();
+
+                resultDiv.textContent = `Test Results for device ${result.device_ip}:\n` +
+                                        `Test Type: ${result.test_type}\n` +
+                                        `Throughput: ${result.throughput_mbps} Mbps\n` +
+                                        `Latency: ${result.latency_ms} ms\n` +
+                                        `Packet Loss: ${(result.packet_loss * 100).toFixed(2)} %\n` +
+                                        `Status: ${result.status}`;
+            } catch (error) {
+                resultDiv.textContent = `Error running test: ${error.message}`;
+                resultDiv.classList.add('error');
+            }
+        }
+
+        function clearResult() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = '';
+            resultDiv.style.display = 'none';
+            resultDiv.classList.remove('error');
+        }
+    </script>
+</body>
+</html>
